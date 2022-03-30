@@ -24,6 +24,8 @@ public class PollController {
 
     private final PollService pollService;
 
+    private static final String BASIC_AUTH = "basicAuth";
+
     @GetMapping(value = "/open")
     public Set<PollShortRs> getOpenPoll() {
         return pollService.getOpenPolls();
@@ -34,7 +36,7 @@ public class PollController {
         return pollService.getClosePolls();
     }
 
-    @Operation(security = @SecurityRequirement(name = "basicAuth"))
+    @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
     @GetMapping(value = "/details/{id}")
     public PollRs getDetailsPoll(@PathVariable(name = "id") Long id) throws ValidationException, NotFoundException {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

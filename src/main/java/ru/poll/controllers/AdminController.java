@@ -33,60 +33,63 @@ public class AdminController {
     private final QuestionService questionService;
     private final AnswerService answerService;
 
-    @Operation(security = @SecurityRequirement(name = "basicAuth"))
+    private static final String APPLICATION_PATCH = "application/json-patch+json";
+    private static final String BASIC_AUTH = "basicAuth";
+
+    @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
     @PostMapping(value = "/poll")
     public PollRs savePoll(@Valid @RequestBody PollRq poll) throws ValidationException {
         return pollService.savePoll(poll);
     }
 
-    @Operation(security = @SecurityRequirement(name = "basicAuth"))
-    @PatchMapping(value = "/poll/{id}", consumes = "application/json-patch+json")
+    @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
+    @PatchMapping(value = "/poll/{id}", consumes = APPLICATION_PATCH)
     public PollRs updatePoll(@PathVariable("id") Long id, @RequestBody JsonPatch jsonPatch)
             throws JsonPatchException, NotFoundException, JsonProcessingException, ValidationException, UpdateException {
         return pollService.updatePoll(id, jsonPatch);
     }
 
-    @Operation(security = @SecurityRequirement(name = "basicAuth"))
+    @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
     @DeleteMapping(value = "/poll/{id}")
     public void deletePoll(@PathVariable("id") Long id) throws NotFoundException, DeleteException {
         pollService.deletePoll(id);
     }
 
-    @Operation(security = @SecurityRequirement(name = "basicAuth"))
+    @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
     @PutMapping(value = "/poll/{id}")
     public PollRs addQuestions(@PathVariable("id") Long id, @RequestBody Set<QuestionRq> questions)
             throws ValidationException, NotFoundException, UpdateException {
         return pollService.addQuestions(id, questions);
     }
 
-    @Operation(security = @SecurityRequirement(name = "basicAuth"))
-    @PatchMapping(value = "/question/{id}", consumes = "application/json-patch+json")
+    @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
+    @PatchMapping(value = "/question/{id}", consumes = APPLICATION_PATCH)
     public QuestionRs updateQuestion(@PathVariable("id") Long id, @RequestBody JsonPatch jsonPatch)
             throws JsonPatchException, NotFoundException, JsonProcessingException, ValidationException, UpdateException {
         return questionService.updateQuestion(id, jsonPatch);
     }
 
-    @Operation(security = @SecurityRequirement(name = "basicAuth"))
+    @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
     @DeleteMapping(value = "/question/{id}")
     public void deleteQuestion(@PathVariable("id") Long id) throws NotFoundException, DeleteException {
         questionService.deleteQuestion(id);
     }
 
-    @Operation(security = @SecurityRequirement(name = "basicAuth"))
+    @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
     @PutMapping(value = "/question/{id}")
     public QuestionRs addAnswers(@PathVariable("id") Long id, @RequestBody Set<AnswerRq> answers)
             throws ValidationException, NotFoundException, UpdateException {
         return questionService.addAnswers(id, answers);
     }
 
-    @Operation(security = @SecurityRequirement(name = "basicAuth"))
-    @PatchMapping(value = "/answer/{id}", consumes = "application/json-patch+json")
+    @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
+    @PatchMapping(value = "/answer/{id}", consumes = APPLICATION_PATCH)
     public AnswerRs updateAnswer(@PathVariable("id") Long id, @RequestBody JsonPatch jsonPatch)
             throws JsonPatchException, NotFoundException, JsonProcessingException, ValidationException, UpdateException {
         return answerService.updateAnswer(id, jsonPatch);
     }
 
-    @Operation(security = @SecurityRequirement(name = "basicAuth"))
+    @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
     @DeleteMapping(value = "/answer/{id}")
     public void deleteAnswer(@PathVariable("id") Long id) throws NotFoundException, DeleteException, ValidationException {
         answerService.deleteAnswer(id);
