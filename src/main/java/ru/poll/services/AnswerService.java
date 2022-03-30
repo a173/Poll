@@ -18,11 +18,13 @@ public interface AnswerService {
 
     Question addQuestionToAnswer(Question question, Set<AnswerRq> answers);
 
-    AnswerRs updateAnswer(Long id, JsonPatch jsonPatch) throws NotFoundException, JsonPatchException, JsonProcessingException, ValidationException, UpdateException;
+    AnswerRs updateAnswer(Long id, JsonPatch jsonPatch) throws NotFoundException, JsonPatchException, JsonProcessingException, UpdateException;
 
     void deleteAnswer(Long id) throws NotFoundException, DeleteException, ValidationException;
 
     Answer getAnswer(Long id) throws NotFoundException;
+
+    Answer getAnswer(Question question, Long answerId) throws NotFoundException, ValidationException;
 
     Answer save(String answer, Question question);
 }

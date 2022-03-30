@@ -49,7 +49,7 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     @Transactional
-    public AnswerRs updateAnswer(Long id, JsonPatch jsonPatch) throws NotFoundException, JsonPatchException, JsonProcessingException, ValidationException, UpdateException {
+    public AnswerRs updateAnswer(Long id, JsonPatch jsonPatch) throws NotFoundException, JsonPatchException, JsonProcessingException, UpdateException {
         log.info(LogMessage.UPDATE_ANSWER, id);
 
         Answer answer = getAnswer(id);
@@ -81,6 +81,14 @@ public class AnswerServiceImpl implements AnswerService {
 
         return answerRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format(ExceptionMessage.ANSWER_NOT_FOUND, id)));
+    }
+
+    @Override
+    public Answer getAnswer(Question question, Long answerId) throws NotFoundException, ValidationException {
+        Answer answerEntity = getAnswer(answerId);
+        if (!question.getAnswers().contains(answerEntity))
+            throw new ValidationException(ExceptionMessage.ANSWER_NOT_RELATIONSHIP_TO_QUESTION);
+        return answerEntity;
     }
 
     @Override

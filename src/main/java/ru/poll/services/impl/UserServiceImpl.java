@@ -106,20 +106,13 @@ public class UserServiceImpl implements UserService {
             throw new ValidationException(ExceptionMessage.ALREADY_ANSWER);
 
         if (question.getType().equals(QuestionTypeDto.SINGLE))
-            user.getAnswers().add(getAnswer(question, objectMapper.convertValue(answer.getContent(), Long.class)));
+            user.getAnswers().add(answerService.getAnswer(question, objectMapper.convertValue(answer.getContent(), Long.class)));
         else if (question.getType().equals(QuestionTypeDto.MULTIPLE))
             for (Long answerId : objectMapper.convertValue(answer.getContent(), Long[].class))
-                user.getAnswers().add(getAnswer(question, answerId));
+                user.getAnswers().add(answerService.getAnswer(question, answerId));
         else
             user.getAnswers().add(answerService
                     .save(objectMapper.convertValue(answer.getContent(), String.class), question));
         userRepository.save(user);
-    }
-
-    private Answer getAnswer(Question question, Long answerId) throws NotFoundException, ValidationException {
-        Answer answerEntity = answerService.getAnswer(answerId);
-        if (!question.getAnswers().contains(answerEntity))
-            throw new ValidationException(ExceptionMessage.ANSWER_NOT_RELATIONSHIP_TO_QUESTION);
-        return answerEntity;
     }
 }
