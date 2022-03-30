@@ -62,9 +62,9 @@ public class ControllerExceptionHandler {
                 .build();
     }
 
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseMessage handlerException(Exception ex) {
+    public ResponseMessage handlerException(RuntimeException ex) {
         log.info(ex.getMessage());
 
         return ResponseMessage.builder()
