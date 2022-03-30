@@ -1,6 +1,5 @@
 package ru.poll.services.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,6 @@ import ru.poll.constants.LogMessage;
 import ru.poll.exceptions.NotFoundException;
 import ru.poll.exceptions.ValidationException;
 import ru.poll.mappers.UserMapper;
-import ru.poll.models.dto.QuestionTypeDto;
 import ru.poll.models.entity.Answer;
 import ru.poll.models.entity.Poll;
 import ru.poll.models.entity.Question;
@@ -20,12 +18,14 @@ import ru.poll.models.response.PollRs;
 import ru.poll.models.response.PollShortRs;
 import ru.poll.models.response.UserRs;
 import ru.poll.repository.UserRepository;
-import ru.poll.services.AnswerService;
 import ru.poll.services.PollService;
 import ru.poll.services.QuestionService;
 import ru.poll.services.UserService;
 import ru.poll.utils.Validate;
+import ru.poll.utils.converters.AnswerHandle;
 
+import javax.annotation.Resource;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -38,9 +38,9 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final PollService pollService;
     private final QuestionService questionService;
-    private final AnswerService answerService;
     private final Validate validate;
-    private final ObjectMapper objectMapper;
+    @Resource
+    private final Map<String, AnswerHandle> answerMap;
 
     @Override
     @Transactional
@@ -105,14 +105,7 @@ public class UserServiceImpl implements UserService {
                 .map(Answer::getQuestion).collect(Collectors.toSet()).contains(question))
             throw new ValidationException(ExceptionMessage.ALREADY_ANSWER);
 
-        if (question.getType().equals(QuestionTypeDto.SINGLE))
-            user.getAnswers().add(answerService.getAnswer(question, objectMapper.convertValue(answer.getContent(), Long.class)));
-        else if (question.getType().equals(QuestionTypeDto.MULTIPLE))
-            for (Long answerId : objectMapper.convertValue(answer.getContent(), Long[].class))
-                user.getAnswers().add(answerService.getAnswer(question, answerId));
-        else
-            user.getAnswers().add(answerService
-                    .save(objectMapper.convertValue(answer.getContent(), String.class), question));
+        answerMap.get(question.getType().name()).handle(answer.getContent(), user.getAnswers(), question);
         userRepository.save(user);
     }
 }
