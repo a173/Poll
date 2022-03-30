@@ -8,7 +8,6 @@ import ru.poll.exceptions.ValidationException;
 import ru.poll.models.dto.QuestionTypeDto;
 import ru.poll.models.entity.Answer;
 import ru.poll.models.entity.Question;
-import ru.poll.models.entity.User;
 import ru.poll.services.AnswerService;
 import ru.poll.utils.converters.AnswerHandle;
 
