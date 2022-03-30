@@ -85,7 +85,7 @@ public class AdminController {
     @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
     @PatchMapping(value = "/answer/{id}", consumes = APPLICATION_PATCH)
     public AnswerRs updateAnswer(@PathVariable("id") Long id, @RequestBody JsonPatch jsonPatch)
-            throws JsonPatchException, NotFoundException, JsonProcessingException, ValidationException, UpdateException {
+            throws JsonPatchException, NotFoundException, JsonProcessingException, UpdateException {
         return answerService.updateAnswer(id, jsonPatch);
     }
 
