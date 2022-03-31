@@ -9,13 +9,13 @@ import ru.poll.models.dto.QuestionTypeDto;
 import ru.poll.models.entity.Answer;
 import ru.poll.models.entity.Question;
 import ru.poll.services.AnswerService;
-import ru.poll.utils.converters.AnswerHandle;
+import ru.poll.utils.converters.AnswerHandler;
 
 import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
-public class AnswerSingle implements AnswerHandle {
+public class AnswerSingle implements AnswerHandler {
 
     private final ObjectMapper objectMapper;
     private final AnswerService answerService;

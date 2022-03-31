@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 import ru.poll.models.dto.QuestionTypeDto;
-import ru.poll.models.interfaces.QuestionInterface;
+import ru.poll.models.interfaces.IQuestion;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -13,7 +13,7 @@ import java.util.Set;
 @Value
 @Builder
 @Jacksonized
-public class QuestionRq implements QuestionInterface {
+public class QuestionRq implements IQuestion {
     @NotNull
     String body;
     @NotNull

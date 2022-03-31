@@ -2,13 +2,13 @@ package ru.poll.models.dto;
 
 import lombok.Builder;
 import lombok.Value;
-import ru.poll.models.interfaces.QuestionInterface;
+import ru.poll.models.interfaces.IQuestion;
 
 import java.util.Set;
 
 @Value
 @Builder
-public class QuestionDto implements QuestionInterface {
+public class QuestionDto implements IQuestion {
 
     Long id;
     String body;

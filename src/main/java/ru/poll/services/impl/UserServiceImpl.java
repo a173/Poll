@@ -22,10 +22,11 @@ import ru.poll.services.PollService;
 import ru.poll.services.QuestionService;
 import ru.poll.services.UserService;
 import ru.poll.utils.Validate;
-import ru.poll.utils.converters.AnswerHandle;
+import ru.poll.utils.converters.AnswerHandler;
 
 import javax.annotation.Resource;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
     private final QuestionService questionService;
     private final Validate validate;
     @Resource
-    private final Map<String, AnswerHandle> answerMap;
+    private final Map<String, AnswerHandler> answerMap;
 
     @Override
     @Transactional
@@ -105,7 +106,9 @@ public class UserServiceImpl implements UserService {
                 .map(Answer::getQuestion).collect(Collectors.toSet()).contains(question))
             throw new ValidationException(ExceptionMessage.ALREADY_ANSWER);
 
-        answerMap.get(question.getType().name()).handle(answer.getContent(), user.getAnswers(), question);
+        Optional.ofNullable(answerMap.get(question.getType().name()))
+                .orElseThrow(RuntimeException::new)
+                .handle(answer.getContent(), user.getAnswers(), question);
         userRepository.save(user);
     }
 }

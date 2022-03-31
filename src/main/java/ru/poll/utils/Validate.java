@@ -4,8 +4,8 @@ import org.springframework.stereotype.Component;
 import ru.poll.constants.ExceptionMessage;
 import ru.poll.exceptions.ValidationException;
 import ru.poll.models.dto.QuestionTypeDto;
-import ru.poll.models.interfaces.PollInterface;
-import ru.poll.models.interfaces.QuestionInterface;
+import ru.poll.models.interfaces.IPoll;
+import ru.poll.models.interfaces.IQuestion;
 
 import java.util.Date;
 import java.util.Objects;
@@ -14,7 +14,7 @@ import java.util.Set;
 @Component
 public class Validate {
 
-    public <T extends PollInterface> T poll(T poll) throws ValidationException {
+    public <T extends IPoll> T poll(T poll) throws ValidationException {
         if (new Date().compareTo(poll.getDateFrom()) > -1)
             throw new ValidationException(ExceptionMessage.INCORRECT_DATE_FROM);
         if (poll.getDateFrom().compareTo(poll.getDateTo()) > 0)
@@ -25,7 +25,7 @@ public class Validate {
         return poll;
     }
 
-    public  <T extends QuestionInterface> Set<T> questions(Set<T> questions) throws ValidationException {
+    public  <T extends IQuestion> Set<T> questions(Set<T> questions) throws ValidationException {
         for (T question : questions) {
             question(question);
         }
@@ -33,7 +33,7 @@ public class Validate {
         return questions;
     }
 
-    public <T extends QuestionInterface> T question(T question) throws ValidationException {
+    public <T extends IQuestion> T question(T question) throws ValidationException {
         if (question.getType().equals(QuestionTypeDto.OPEN) &&
                 Objects.nonNull(question.getAnswers()) &&
                 question.getAnswers().size() > 0)
