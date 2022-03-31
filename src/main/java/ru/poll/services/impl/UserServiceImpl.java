@@ -13,7 +13,7 @@ import ru.poll.models.entity.Answer;
 import ru.poll.models.entity.Poll;
 import ru.poll.models.entity.Question;
 import ru.poll.models.entity.User;
-import ru.poll.models.request.AnswerObjectRq;
+import ru.poll.models.request.ObjectRq;
 import ru.poll.models.response.PollRs;
 import ru.poll.models.response.PollShortRs;
 import ru.poll.models.response.UserRs;
@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void beginPoll(User user, Long pollId, Long questionId, AnswerObjectRq answer) throws NotFoundException, ValidationException {
+    public void beginPoll(User user, Long pollId, Long questionId, ObjectRq answer) throws NotFoundException, ValidationException {
         log.info(LogMessage.USER_ANSWER, user.getId(), questionId);
 
         Poll poll = pollService.getPoll(pollId);

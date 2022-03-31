@@ -3,7 +3,7 @@ package ru.poll.services;
 import ru.poll.exceptions.NotFoundException;
 import ru.poll.exceptions.ValidationException;
 import ru.poll.models.entity.User;
-import ru.poll.models.request.AnswerObjectRq;
+import ru.poll.models.request.ObjectRq;
 import ru.poll.models.response.PollRs;
 import ru.poll.models.response.PollShortRs;
 import ru.poll.models.response.UserRs;
@@ -20,5 +20,5 @@ public interface UserService {
 
     Set<PollRs> getStartedPolls(User user) throws NotFoundException;
 
-    void beginPoll(User user, Long pollId, Long questionId, AnswerObjectRq answer) throws NotFoundException, ValidationException;
+    void beginPoll(User user, Long pollId, Long questionId, ObjectRq answer) throws NotFoundException, ValidationException;
 }

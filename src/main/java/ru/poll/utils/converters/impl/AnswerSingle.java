@@ -22,7 +22,7 @@ public class AnswerSingle implements AnswerHandler {
 
     @Override
     public void handle(Object content, Set<Answer> answers, Question question) throws ValidationException, NotFoundException {
-        answers.add(answerService.getAnswer(question, objectMapper.convertValue(content, Long.class)));
+        answers.add(answerService.getValidationAnswer(question, objectMapper.convertValue(content, Long.class)));
     }
 
     @Override

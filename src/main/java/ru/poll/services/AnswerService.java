@@ -24,7 +24,7 @@ public interface AnswerService {
 
     Answer getAnswer(Long id) throws NotFoundException;
 
-    Answer getAnswer(Question question, Long answerId) throws NotFoundException, ValidationException;
+    Answer getValidationAnswer(Question question, Long answerId) throws NotFoundException, ValidationException;
 
     Answer save(String answer, Question question);
 }

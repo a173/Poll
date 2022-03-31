@@ -84,7 +84,7 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public Answer getAnswer(Question question, Long answerId) throws NotFoundException, ValidationException {
+    public Answer getValidationAnswer(Question question, Long answerId) throws NotFoundException, ValidationException {
         Answer answerEntity = getAnswer(answerId);
         if (!question.getAnswers().contains(answerEntity))
             throw new ValidationException(ExceptionMessage.ANSWER_NOT_RELATIONSHIP_TO_QUESTION);

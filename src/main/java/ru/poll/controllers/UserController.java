@@ -3,12 +3,13 @@ package ru.poll.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ru.poll.exceptions.NotFoundException;
 import ru.poll.exceptions.ValidationException;
 import ru.poll.models.entity.User;
-import ru.poll.models.request.AnswerObjectRq;
+import ru.poll.models.request.ObjectRq;
 import ru.poll.models.response.PollRs;
 import ru.poll.models.response.PollShortRs;
 import ru.poll.models.response.UserRs;
@@ -27,44 +28,45 @@ public class UserController {
     private static final String BASIC_AUTH = "basicAuth";
 
     @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
-    @GetMapping(value = "/{pollId}/subscribe")
-    public UserRs subscribePoll(@PathVariable("pollId") Long pollId) throws NotFoundException, ValidationException {
+    @PostMapping(value = "/subscribe")
+    public ResponseEntity<UserRs> subscribePoll(@Valid @RequestBody ObjectRq pollId) throws NotFoundException, ValidationException {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        return userService.subscribePoll(pollId, user);
+        return ResponseEntity.ok(userService.subscribePoll(((Number) pollId.getContent()).longValue(), user));
     }
 
     @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
-    @GetMapping(value = "/{pollId}/unsubscribe")
-    public UserRs unsubscribePoll(@PathVariable("pollId") Long pollId) throws NotFoundException, ValidationException {
+    @PostMapping(value = "/unsubscribe")
+    public ResponseEntity<UserRs> unsubscribePoll(@Valid @RequestBody ObjectRq pollId) throws NotFoundException, ValidationException {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        return userService.unsubscribePoll(pollId, user);
+        return ResponseEntity.ok(userService.unsubscribePoll(((Number) pollId.getContent()).longValue(), user));
     }
 
     @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
-    @GetMapping(value = "/my/subscribe")
-    public Set<PollShortRs> mySubscribe() throws NotFoundException {
+    @GetMapping(value = "/subscribes")
+    public ResponseEntity<Set<PollShortRs>> mySubscribe() throws NotFoundException {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        return userService.mySubscribe(user);
+        return ResponseEntity.ok(userService.mySubscribe(user));
     }
 
     @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
-    @GetMapping(value = "/my/polls")
-    public Set<PollRs> getStartedPolls() throws NotFoundException {
+    @GetMapping(value = "/started/polls")
+    public ResponseEntity<Set<PollRs>> getStartedPolls() throws NotFoundException {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        return userService.getStartedPolls(user);
+        return ResponseEntity.ok(userService.getStartedPolls(user));
     }
 
     @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
-    @PostMapping(value = "/started/{pollId}/{questionId}")
-    public void beginPoll(@PathVariable(name = "pollId") Long pollId,
+    @PostMapping(value = "/answer/{pollId}/{questionId}")
+    public ResponseEntity<Void> beginPoll(@PathVariable(name = "pollId") Long pollId,
                           @PathVariable(name = "questionId") Long questionId,
-                          @Valid @RequestBody AnswerObjectRq answer) throws NotFoundException, ValidationException {
+                          @Valid @RequestBody ObjectRq answer) throws NotFoundException, ValidationException {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         userService.beginPoll(user, pollId, questionId, answer);
+        return ResponseEntity.ok().build();
     }
 }

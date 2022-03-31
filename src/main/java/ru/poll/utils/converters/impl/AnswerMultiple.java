@@ -23,7 +23,7 @@ public class AnswerMultiple implements AnswerHandler {
     @Override
     public void handle(Object content, Set<Answer> answers, Question question) throws ValidationException, NotFoundException {
         for (Long answerId : objectMapper.convertValue(content, Long[].class))
-            answers.add(answerService.getAnswer(question, answerId));
+            answers.add(answerService.getValidationAnswer(question, answerId));
     }
 
     @Override
