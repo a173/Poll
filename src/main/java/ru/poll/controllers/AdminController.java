@@ -12,15 +12,16 @@ import ru.poll.exceptions.DeleteException;
 import ru.poll.exceptions.NotFoundException;
 import ru.poll.exceptions.UpdateException;
 import ru.poll.exceptions.ValidationException;
-import ru.poll.models.request.AnswerRq;
-import ru.poll.models.request.PollRq;
-import ru.poll.models.request.QuestionRq;
-import ru.poll.models.response.AnswerRs;
-import ru.poll.models.response.PollRs;
-import ru.poll.models.response.QuestionRs;
+import ru.poll.models.requests.AnswerRq;
+import ru.poll.models.requests.PollRq;
+import ru.poll.models.requests.QuestionRq;
+import ru.poll.models.responses.AnswerRs;
+import ru.poll.models.responses.PollRs;
+import ru.poll.models.responses.QuestionRs;
 import ru.poll.services.AnswerService;
 import ru.poll.services.PollService;
 import ru.poll.services.QuestionService;
+import ru.poll.services.UserService;
 
 import javax.validation.Valid;
 import java.util.Set;
@@ -33,6 +34,7 @@ public class AdminController {
     private final PollService pollService;
     private final QuestionService questionService;
     private final AnswerService answerService;
+    private final UserService userService;
 
     private static final String APPLICATION_PATCH = "application/json-patch+json";
     private static final String BASIC_AUTH = "basicAuth";
@@ -103,5 +105,12 @@ public class AdminController {
             throws NotFoundException, DeleteException, ValidationException {
         answerService.deleteAnswer(id);
         return ResponseEntity.ok().build();
+    }
+
+    @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
+    @GetMapping(value = "/polls/{userId}")
+    public ResponseEntity<Set<PollRs>> getStartedPolls(@PathVariable(name = "userId") Long userId) throws NotFoundException {
+
+        return ResponseEntity.ok(userService.getPollsUser(userId));
     }
 }

@@ -1,7 +1,7 @@
 package ru.poll.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.poll.models.entity.User;
+import ru.poll.models.entities.User;
 
 import java.util.Optional;
 

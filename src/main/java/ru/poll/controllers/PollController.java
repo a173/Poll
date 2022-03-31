@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.poll.exceptions.NotFoundException;
 import ru.poll.exceptions.ValidationException;
-import ru.poll.models.entity.User;
-import ru.poll.models.response.PollRs;
-import ru.poll.models.response.PollShortRs;
+import ru.poll.models.entities.User;
+import ru.poll.models.responses.PollRs;
+import ru.poll.models.responses.PollShortRs;
 import ru.poll.services.PollService;
 
 import java.util.Set;

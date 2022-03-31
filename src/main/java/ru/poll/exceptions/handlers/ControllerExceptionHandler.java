@@ -2,6 +2,7 @@ package ru.poll.exceptions.handlers;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -11,7 +12,7 @@ import ru.poll.exceptions.DeleteException;
 import ru.poll.exceptions.NotFoundException;
 import ru.poll.exceptions.UpdateException;
 import ru.poll.exceptions.ValidationException;
-import ru.poll.models.response.ResponseMessage;
+import ru.poll.models.responses.ResponseMessage;
 
 @Log4j2
 @RestControllerAdvice
@@ -56,6 +57,17 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseMessage handlerNotFoundException(NotFoundException ex) {
+        return ResponseMessage.builder()
+                .message(ex.getMessage())
+                .errorCode(HttpStatus.NOT_FOUND.value())
+                .build();
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseMessage handlerUsernameNotFoundException(UsernameNotFoundException ex) {
+        log.info(ex.getMessage());
+
         return ResponseMessage.builder()
                 .message(ex.getMessage())
                 .errorCode(HttpStatus.NOT_FOUND.value())

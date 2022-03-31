@@ -7,11 +7,11 @@ import ru.poll.exceptions.DeleteException;
 import ru.poll.exceptions.NotFoundException;
 import ru.poll.exceptions.UpdateException;
 import ru.poll.exceptions.ValidationException;
-import ru.poll.models.entity.Poll;
-import ru.poll.models.entity.Question;
-import ru.poll.models.request.AnswerRq;
-import ru.poll.models.request.QuestionRq;
-import ru.poll.models.response.QuestionRs;
+import ru.poll.models.entities.Poll;
+import ru.poll.models.entities.Question;
+import ru.poll.models.requests.AnswerRq;
+import ru.poll.models.requests.QuestionRq;
+import ru.poll.models.responses.QuestionRs;
 
 import java.util.Set;
 

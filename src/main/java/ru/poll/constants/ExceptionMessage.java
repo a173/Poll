@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 public class ExceptionMessage {
 
     public static final String USER_NOT_FOUND = "Пользователь с никнеймом %s не найден";
+    public static final String USERID_NOT_FOUND = "Пользователь с id %s не найден";
     public static final String POLL_NOT_FOUND = "Опрос с id %s не найден";
     public static final String POLLS_NOT_FOUND = "Опросы не найдены";
     public static final String QUESTION_NOT_FOUND = "Вопрос с id %s не найден";

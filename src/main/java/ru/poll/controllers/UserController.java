@@ -8,11 +8,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ru.poll.exceptions.NotFoundException;
 import ru.poll.exceptions.ValidationException;
-import ru.poll.models.entity.User;
-import ru.poll.models.request.ObjectRq;
-import ru.poll.models.response.PollRs;
-import ru.poll.models.response.PollShortRs;
-import ru.poll.models.response.UserRs;
+import ru.poll.models.entities.User;
+import ru.poll.models.requests.ObjectRq;
+import ru.poll.models.responses.PollRs;
+import ru.poll.models.responses.PollShortRs;
+import ru.poll.models.responses.UserRs;
 import ru.poll.services.UserService;
 
 import javax.validation.Valid;

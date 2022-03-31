@@ -17,13 +17,13 @@ import ru.poll.exceptions.UpdateException;
 import ru.poll.exceptions.ValidationException;
 import ru.poll.mappers.AnswerMapper;
 import ru.poll.models.dto.AnswerDto;
-import ru.poll.models.entity.Answer;
-import ru.poll.models.entity.Question;
-import ru.poll.models.request.AnswerRq;
-import ru.poll.models.response.AnswerRs;
+import ru.poll.models.entities.Answer;
+import ru.poll.models.entities.Question;
+import ru.poll.models.requests.AnswerRq;
+import ru.poll.models.responses.AnswerRs;
 import ru.poll.repository.AnswerRepository;
 import ru.poll.services.AnswerService;
-import ru.poll.utils.Validate;
+import ru.poll.validates.Validate;
 
 import java.util.Set;
 import java.util.stream.Collectors;

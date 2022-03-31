@@ -1,7 +1,7 @@
 package ru.poll.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.poll.models.entity.Poll;
+import ru.poll.models.entities.Poll;
 
 import java.util.Date;
 import java.util.Set;

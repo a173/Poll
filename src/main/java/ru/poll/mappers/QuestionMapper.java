@@ -5,10 +5,10 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import ru.poll.models.dto.QuestionDto;
-import ru.poll.models.entity.Poll;
-import ru.poll.models.entity.Question;
-import ru.poll.models.request.QuestionRq;
-import ru.poll.models.response.QuestionRs;
+import ru.poll.models.entities.Poll;
+import ru.poll.models.entities.Question;
+import ru.poll.models.requests.QuestionRq;
+import ru.poll.models.responses.QuestionRs;
 
 import java.util.Objects;
 

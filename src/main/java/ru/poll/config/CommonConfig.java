@@ -3,7 +3,7 @@ package ru.poll.config;
 import lombok.NonNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.poll.utils.converters.AnswerHandler;
+import ru.poll.converters.AnswerHandler;
 
 import java.util.Collection;
 import java.util.Map;

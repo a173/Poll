@@ -22,7 +22,7 @@ public class LogMessage {
     public static final String SUBSCRIBE = "Пользователь {} подписывается на опрос {}";
     public static final String UNSUBSCRIBE = "Пользователь {} отписывается от опроса {}";
     public static final String GET_SUBSCRIPTIONS = "Получение списка опросов пользователем {}";
-    public static final String GET_SUBSCRIPTIONS_DETAILS = "Получение списка опросов с ответами пользователем {}";
+    public static final String GET_SUBSCRIPTIONS_DETAILS = "Получение списка опросов с ответами пользователя {}";
     public static final String USER_ANSWER = "Пользователь {} отвечает на вопрос {}";
 
 }

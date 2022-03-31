@@ -3,10 +3,10 @@ package ru.poll.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ru.poll.models.dto.AnswerDto;
-import ru.poll.models.entity.Answer;
-import ru.poll.models.entity.Question;
-import ru.poll.models.request.AnswerRq;
-import ru.poll.models.response.AnswerRs;
+import ru.poll.models.entities.Answer;
+import ru.poll.models.entities.Question;
+import ru.poll.models.requests.AnswerRq;
+import ru.poll.models.responses.AnswerRs;
 
 @Mapper
 public interface AnswerMapper {

@@ -2,6 +2,7 @@ package ru.poll.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.poll.constants.ExceptionMessage;
@@ -9,20 +10,20 @@ import ru.poll.constants.LogMessage;
 import ru.poll.exceptions.NotFoundException;
 import ru.poll.exceptions.ValidationException;
 import ru.poll.mappers.UserMapper;
-import ru.poll.models.entity.Answer;
-import ru.poll.models.entity.Poll;
-import ru.poll.models.entity.Question;
-import ru.poll.models.entity.User;
-import ru.poll.models.request.ObjectRq;
-import ru.poll.models.response.PollRs;
-import ru.poll.models.response.PollShortRs;
-import ru.poll.models.response.UserRs;
+import ru.poll.models.entities.Answer;
+import ru.poll.models.entities.Poll;
+import ru.poll.models.entities.Question;
+import ru.poll.models.entities.User;
+import ru.poll.models.requests.ObjectRq;
+import ru.poll.models.responses.PollRs;
+import ru.poll.models.responses.PollShortRs;
+import ru.poll.models.responses.UserRs;
 import ru.poll.repository.UserRepository;
 import ru.poll.services.PollService;
 import ru.poll.services.QuestionService;
 import ru.poll.services.UserService;
-import ru.poll.utils.Validate;
-import ru.poll.utils.converters.AnswerHandler;
+import ru.poll.validates.Validate;
+import ru.poll.converters.AnswerHandler;
 
 import javax.annotation.Resource;
 import java.util.Map;
@@ -88,6 +89,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Set<PollRs> getPollsUser(Long userId) throws NotFoundException {
+        log.info(LogMessage.GET_SUBSCRIPTIONS_DETAILS, userId);
+
+        return pollService.getPollsRs(userRepository.findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format(ExceptionMessage.USERID_NOT_FOUND, userId))));
+    }
+
+    @Override
     @Transactional
     public void beginPoll(User user, Long pollId, Long questionId, ObjectRq answer) throws NotFoundException, ValidationException {
         log.info(LogMessage.USER_ANSWER, user.getId(), questionId);
@@ -102,8 +111,7 @@ public class UserServiceImpl implements UserService {
             throw new ValidationException(ExceptionMessage.NOT_SUBSCRIBE);
         if (!poll.getQuestions().contains(question))
             throw new ValidationException(ExceptionMessage.QUESTION_NOT_RELATIONSHIP_TO_POLL);
-        if (user.getAnswers().stream()
-                .map(Answer::getQuestion).collect(Collectors.toSet()).contains(question))
+        if (user.getAnswers().stream().map(Answer::getQuestion).collect(Collectors.toSet()).contains(question))
             throw new ValidationException(ExceptionMessage.ALREADY_ANSWER);
 
         Optional.ofNullable(answerMap.get(question.getType().name()))
