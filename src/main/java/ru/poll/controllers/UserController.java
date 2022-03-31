@@ -37,7 +37,7 @@ public class UserController {
 
     @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
     @PostMapping(value = "/unsubscribe")
-    public ResponseEntity<UserRs> unsubscribePoll(@Valid @RequestBody ObjectRq pollId) throws NotFoundException, ValidationException {
+    public ResponseEntity<UserRs> unsubscribePoll(@Valid @RequestBody ObjectRq pollId)throws NotFoundException, ValidationException {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         return ResponseEntity.ok(userService.unsubscribePoll(((Number) pollId.getContent()).longValue(), user));
@@ -62,8 +62,8 @@ public class UserController {
     @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
     @PostMapping(value = "/answer/{pollId}/{questionId}")
     public ResponseEntity<Void> beginPoll(@PathVariable(name = "pollId") Long pollId,
-                          @PathVariable(name = "questionId") Long questionId,
-                          @Valid @RequestBody ObjectRq answer) throws NotFoundException, ValidationException {
+                                          @PathVariable(name = "questionId") Long questionId,
+                                          @Valid @RequestBody ObjectRq answer) throws NotFoundException, ValidationException {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         userService.beginPoll(user, pollId, questionId, answer);

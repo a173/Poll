@@ -46,7 +46,7 @@ public class AdminController {
     @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
     @PatchMapping(value = "/poll/{id}", consumes = APPLICATION_PATCH)
     public ResponseEntity<PollRs> updatePoll(@PathVariable("id") Long id,
-                                            @RequestBody JsonPatch jsonPatch)
+                                             @RequestBody JsonPatch jsonPatch)
             throws JsonPatchException, NotFoundException, JsonProcessingException, ValidationException, UpdateException {
         return ResponseEntity.ok(pollService.updatePoll(id, jsonPatch));
     }
@@ -61,7 +61,7 @@ public class AdminController {
     @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
     @PutMapping(value = "/poll/{id}")
     public ResponseEntity<PollRs> addQuestions(@PathVariable("id") Long id,
-                               @Valid @RequestBody Set<QuestionRq> questions)
+                                               @Valid @RequestBody Set<QuestionRq> questions)
             throws ValidationException, NotFoundException, UpdateException {
         return ResponseEntity.ok(pollService.addQuestions(id, questions));
     }
@@ -69,7 +69,7 @@ public class AdminController {
     @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
     @PatchMapping(value = "/question/{id}", consumes = APPLICATION_PATCH)
     public ResponseEntity<QuestionRs> updateQuestion(@PathVariable("id") Long id,
-                                     @RequestBody JsonPatch jsonPatch)
+                                                     @RequestBody JsonPatch jsonPatch)
             throws JsonPatchException, NotFoundException, JsonProcessingException, ValidationException, UpdateException {
         return ResponseEntity.ok(questionService.updateQuestion(id, jsonPatch));
     }
@@ -84,7 +84,7 @@ public class AdminController {
     @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
     @PutMapping(value = "/question/{id}")
     public ResponseEntity<QuestionRs> addAnswers(@PathVariable("id") Long id,
-                                 @Valid @RequestBody Set<AnswerRq> answers)
+                                                 @Valid @RequestBody Set<AnswerRq> answers)
             throws ValidationException, NotFoundException, UpdateException {
         return ResponseEntity.ok(questionService.addAnswers(id, answers));
     }
@@ -92,14 +92,15 @@ public class AdminController {
     @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
     @PatchMapping(value = "/answer/{id}", consumes = APPLICATION_PATCH)
     public ResponseEntity<AnswerRs> updateAnswer(@PathVariable("id") Long id,
-                                 @RequestBody JsonPatch jsonPatch)
+                                                 @RequestBody JsonPatch jsonPatch)
             throws JsonPatchException, NotFoundException, JsonProcessingException, UpdateException {
         return ResponseEntity.ok(answerService.updateAnswer(id, jsonPatch));
     }
 
     @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
     @DeleteMapping(value = "/answer/{id}")
-    public ResponseEntity<Void> deleteAnswer(@PathVariable("id") Long id) throws NotFoundException, DeleteException, ValidationException {
+    public ResponseEntity<Void> deleteAnswer(@PathVariable("id") Long id)
+            throws NotFoundException, DeleteException, ValidationException {
         answerService.deleteAnswer(id);
         return ResponseEntity.ok().build();
     }
