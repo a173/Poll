@@ -14,6 +14,7 @@ import ru.poll.models.response.PollShortRs;
 import ru.poll.models.response.UserRs;
 import ru.poll.services.UserService;
 
+import javax.validation.Valid;
 import java.util.Set;
 
 @RestController
@@ -59,7 +60,9 @@ public class UserController {
 
     @Operation(security = @SecurityRequirement(name = BASIC_AUTH))
     @PostMapping(value = "/started/{pollId}/{questionId}")
-    public void beginPoll(@PathVariable(name = "pollId") Long pollId, @PathVariable(name = "questionId") Long questionId, @RequestBody AnswerObjectRq answer) throws NotFoundException, ValidationException {
+    public void beginPoll(@PathVariable(name = "pollId") Long pollId,
+                          @PathVariable(name = "questionId") Long questionId,
+                          @Valid @RequestBody AnswerObjectRq answer) throws NotFoundException, ValidationException {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         userService.beginPoll(user, pollId, questionId, answer);
